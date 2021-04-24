@@ -9,7 +9,10 @@ public class OrbitAroundObjectScript : MonoBehaviour
     public float rotationSpeed = 30;
 
     public float distanceToTarget;
-    public float distanceChangeSpeed;
+    public float distanceChangeSensitivity = 0.5f;
+
+    public float mouseScrollSensitivity = 0.1f;
+    private float mouseScrollDelta;
 
     public float actualDistance;
 
@@ -22,22 +25,41 @@ public class OrbitAroundObjectScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckForMouseWheelInput();
+        ChangeDistance();
         OrbitAroundTarget();
-        ChangeDistanceToTarget();
+        MoveDistanceChange();
+
         actualDistance = Vector3.Distance(target.position, transform.position);
     }
 
+    /**
+     * Orbits / rotates around the "target" transform
+     */
     private void OrbitAroundTarget()
     {
         transform.RotateAround(target.position, Vector3.up, rotationSpeed * Time.deltaTime);
         transform.LookAt(target.position);
     }
 
-    private void ChangeDistanceToTarget()
+    /**
+     * Calculates and changes the distance / radius to the target gradually
+     */
+    private void MoveDistanceChange()
     {
         // calculates new position when the distance to target (radius) changes and moves towards it.
         Vector3 distanceChangePosition = (transform.position - target.position).normalized * distanceToTarget + target.position;
-        transform.position = Vector3.MoveTowards(transform.position, distanceChangePosition, Time.deltaTime * distanceChangeSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, distanceChangePosition, Time.deltaTime * distanceChangeSensitivity);
+    }
+
+    private void CheckForMouseWheelInput()
+    {
+        mouseScrollDelta =  Input.mouseScrollDelta.y * mouseScrollSensitivity;
+    }
+
+    private void ChangeDistance()
+    {
+        distanceToTarget += mouseScrollDelta;
     }
 }
     
