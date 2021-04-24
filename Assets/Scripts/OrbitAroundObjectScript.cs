@@ -14,7 +14,8 @@ public class OrbitAroundObjectScript : MonoBehaviour
     public float mouseScrollSensitivity = 0.1f;
     private float mouseScrollDelta;
 
-    public float actualDistance;
+    [Space, Header ("Debug Info")]
+    [SerializeField] private float actualDistance;
 
     // Start is called before the first frame update
     void Start()
