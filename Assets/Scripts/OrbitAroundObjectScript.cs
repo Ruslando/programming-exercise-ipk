@@ -9,7 +9,7 @@ public class OrbitAroundObjectScript : MonoBehaviour
     public float rotationSpeed = 30;
 
     public float distanceToTarget;
-    public float distanceChangeSensitivity = 0.5f;
+    public float distanceChangeSensitivity = 0.2f;
 
     public float mouseScrollSensitivity = 0.1f;
     private float mouseScrollDelta;
