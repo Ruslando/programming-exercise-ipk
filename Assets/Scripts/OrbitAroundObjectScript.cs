@@ -47,6 +47,9 @@ public class OrbitAroundObjectScript : MonoBehaviour
      */
     private void MoveDistanceChange()
     {
+        // distance will not changed whenever it gets to zero or below. A little offset prevents this behaviour.
+        if(distanceToTarget <= 0) { distanceToTarget = 0.01f; }
+
         // calculates new position when the distance to target (radius) changes and moves towards it.
         Vector3 distanceChangePosition = (transform.position - target.position).normalized * distanceToTarget + target.position;
         transform.position = Vector3.MoveTowards(transform.position, distanceChangePosition, Time.deltaTime * distanceChangeSensitivity);
